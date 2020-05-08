@@ -1,0 +1,36 @@
+language: python
+matrix:
+#    allow_failures:
+#        - os: osx
+    include:
+#        - os: osx
+#          language: generic
+        - os: linux
+          sudo: required
+          python: 3.4
+        - os: linux
+          sudo: required
+          python: 3.5
+        - os: linux
+          sudo: required
+          python: 3.6        
+        - os: linux
+          sudo: required
+          python: 2.7
+before_install:
+  - ./.travis/before_install.sh
+before_script: # configure a headless display to test plot generation
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install flake8 pytest pytest-cov
+  - pip install .
+# command to run tests + check syntax style
+script:
+  - python setup.py develop
+  - flake8 examples/ ot/ test/
+  - python -m pytest -v test/ --cov=ot
+  # - py.test ot test
