@@ -343,7 +343,7 @@ def plot_image(param, result, comparaison, color_map='Greys', save_image=False):
         spine.set_visible(False)
     ax.set_xticks(np.arange(len(X)))
     if comparaison:
-        ax.set_yticks(np.arange(len(Y)))
+        ax.set_yticks(np.arange(len(Y))[::-1])
     else:
         ax.set_yticks([])
     ax.set_xticklabels(X, size=20)
